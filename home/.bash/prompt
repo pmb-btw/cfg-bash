@@ -1,0 +1,20 @@
+# prompt with solarized colors,
+# one line for info with marked background color
+# one line for the promt symbol
+COMMANDSTATUS='$(if [[ $? -eq 0 ]]; then echo "\[$BASE3$GREENBG\] $CHECKMARK \[$GREEN\]"; else echo "\[$BASE3$REDBG\] $CROSS \[$RED\]"; fi)'
+USERSTATUS='$(if [[ $EUID -ne 0 ]]; then echo "\[$BASE00BG\]$LEFT_SEP\[$BASE3\] \u@\h \[$BASE00$BACKHLBG\]$LEFT_SEP"; else echo "\[$ORANGEBG\]$LEFT_SEP\[$BASE3\] \u@\h \[$ORANGE$BACKHLBG\]$LEFT_SEP"; fi)'
+PROMPTSYMBOL='$(if [[ $EUID -ne 0 ]]; then echo "\[$ORANGE\]\$"; else echo "\[$RED\]#"; fi)'
+PS1="\[$RESET\]\[$BACKHLBG\]$COMMANDSTATUS$USERSTATUS\[$SECONDARY\] \w $(tput el)\[$RESET\]\n$PROMPTSYMBOL\[$RESET\] "
+unset PROMPTSYMBOL
+unset USERSTATUS
+unset COMMANDSTATUS
+
+# If this is an xterm set the title to user@host:dir
+case "$TERM" in
+xterm*|rxvt*)
+    PS1="\[\e]0;\u@\h: \w\a\]$PS1"
+    ;;
+*)
+    ;;
+esac
+

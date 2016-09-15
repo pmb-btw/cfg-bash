@@ -1,0 +1,231 @@
+# DISPLAY CONFIGURATION, involves colors & terminal configuration
+# for bash compatible shells
+##############################################################################
+# CONFIGURATION OPTIONS
+# note that they affect other tools also
+##############################################################################
+# Use powerline symbols
+if [[ -z $POWERLINED ]]
+then
+    export POWERLINED=1
+fi
+# Theme, dark or light solarized
+if [[ -z $THEME ]]
+then
+    export THEME="dark"
+fi
+##############################################################################
+# Inspired by https://gist.github.com/SeanPONeil/3717199
+# List from: https://github.com/altercation/vim-colors-solarized/blob/master/colors/solarized.vim
+# --------- ------- ---- -------  ----------- ---------- ----------- -----------
+# SOLARIZED HEX     16/8 TERMCOL  XTERM/HEX   L*A*B      sRGB        HSB
+# --------- ------- ---- -------  ----------- ---------- ----------- -----------
+# base03    #002b36  8/4 brblack  234 #1c1c1c 15 -12 -12   0  43  54 193 100  21
+# base02    #073642  0/4 black    235 #262626 20 -12 -12   7  54  66 192  90  26
+# base01    #586e75 10/7 brgreen  240 #4e4e4e 45 -07 -07  88 110 117 194  25  46
+# base00    #657b83 11/7 bryellow 241 #585858 50 -07 -07 101 123 131 195  23  51
+# base0     #839496 12/6 brblue   244 #808080 60 -06 -03 131 148 150 186  13  59
+# base1     #93a1a1 14/4 brcyan   245 #8a8a8a 65 -05 -02 147 161 161 180   9  63
+# base2     #eee8d5  7/7 white    254 #d7d7af 92 -00  10 238 232 213  44  11  93
+# base3     #fdf6e3 15/7 brwhite  230 #ffffd7 97  00  10 253 246 227  44  10  99
+# yellow    #b58900  3/3 yellow   136 #af8700 60  10  65 181 137   0  45 100  71
+# orange    #cb4b16  9/3 brred    166 #d75f00 50  50  55 203  75  22  18  89  80
+# red       #dc322f  1/1 red      160 #d70000 50  65  45 220  50  47   1  79  86
+# magenta   #d33682  5/5 magenta  125 #af005f 50  65 -05 211  54 130 331  74  83
+# violet    #6c71c4 13/5 brmagenta 61 #5f5faf 50  15 -45 108 113 196 237  45  77
+# blue      #268bd2  4/4 blue      33 #0087ff 55 -10 -45  38 139 210 205  82  82
+# cyan      #2aa198  6/6 cyan      37 #00afaf 60 -35 -05  42 161 152 175  74  63
+# green     #859900  2/2 green     64 #5f8700 60 -20  65 133 153   0  68 100  60
+# --------- ------- ---- -------  ----------- ---------- ----------- -----------
+
+# NOTE: The solarized colors are defined here but not unset for possible
+# further usage
+function define_colornames {
+COLORS=$(tput colors 2>/dev/null)
+if [[ $COLORS -ge 256 ]]
+then
+    BASE03=$(tput setaf 234)
+    BASE02=$(tput setaf 235)
+    BASE01=$(tput setaf 240)
+    BASE00=$(tput setaf 241)
+    BASE0=$(tput setaf 244)
+    BASE1=$(tput setaf 245)
+    BASE2=$(tput setaf 254)
+    BASE3=$(tput setaf 230)
+    YELLOW=$(tput setaf 136)
+    ORANGE=$(tput setaf 166)
+    RED=$(tput setaf 160)
+    MAGENTA=$(tput setaf 125)
+    VIOLET=$(tput setaf 61)
+    BLUE=$(tput setaf 33)
+    CYAN=$(tput setaf 37)
+    GREEN=$(tput setaf 64)
+    BASE03BG=$(tput setab 234)
+    BASE02BG=$(tput setab 235)
+    BASE01BG=$(tput setab 240)
+    BASE00BG=$(tput setab 241)
+    BASE0BG=$(tput setab 244)
+    BASE1BG=$(tput setab 245)
+    BASE2BG=$(tput setab 254)
+    BASE3BG=$(tput setab 230)
+    YELLOWBG=$(tput setab 136)
+    ORANGEBG=$(tput setab 166)
+    REDBG=$(tput setab 160)
+    MAGENTABG=$(tput setab 125)
+    VIOLETBG=$(tput setab 61)
+    BLUEBG=$(tput setab 33)
+    CYANBG=$(tput setab 37)
+    GREENBG=$(tput setab 64)
+elif [[ $COLORS -eq 16 ]]
+then
+    BASE03=$(tput setaf 8)
+    BASE02=$(tput setaf 0)
+    BASE01=$(tput setaf 10)
+    BASE00=$(tput setaf 11)
+    BASE0=$(tput setaf 12)
+    BASE1=$(tput setaf 14)
+    BASE2=$(tput setaf 7)
+    BASE3=$(tput setaf 15)
+    YELLOW=$(tput setaf 3)
+    ORANGE=$(tput setaf 9)
+    RED=$(tput setaf 1)
+    MAGENTA=$(tput setaf 5)
+    VIOLET=$(tput setaf 13)
+    BLUE=$(tput setaf 4)
+    CYAN=$(tput setaf 6)
+    GREEN=$(tput setaf 2)
+    BASE03BG=$(tput setab 8)
+    BASE02BG=$(tput setab 0)
+    BASE01BG=$(tput setab 10)
+    BASE00BG=$(tput setab 11)
+    BASE0BG=$(tput setab 12)
+    BASE1BG=$(tput setab 14)
+    BASE2BG=$(tput setab 7)
+    BASE3BG=$(tput setab 15)
+    YELLOWBG=$(tput setab 3)
+    ORANGEBG=$(tput setab 9)
+    REDBG=$(tput setab 1)
+    MAGENTABG=$(tput setab 5)
+    VIOLETBG=$(tput setab 13)
+    BLUEBG=$(tput setab 4)
+    CYANBG=$(tput setab 6)
+    GREENBG=$(tput setab 2)
+else
+    BASE03=$(tput setaf 4)
+    BASE02=$(tput setaf 4)
+    BASE01=$(tput setaf 7)
+    BASE00=$(tput setaf 7)
+    BASE0=$(tput setaf 6)
+    BASE1=$(tput setaf 4)
+    BASE2=$(tput setaf 7)
+    BASE3=$(tput setaf 7)
+    YELLOW=$(tput setaf 3)
+    ORANGE=$(tput setaf 3)
+    RED=$(tput setaf 1)
+    MAGENTA=$(tput setaf 5)
+    VIOLET=$(tput setaf 5)
+    BLUE=$(tput setaf 4)
+    CYAN=$(tput setaf 6)
+    GREEN=$(tput setaf 2)
+    BASE03BG=$(tput setab 4)
+    BASE02BG=$(tput setab 4)
+    BASE01BG=$(tput setab 7)
+    BASE00BG=$(tput setab 7)
+    BASE0BG=$(tput setab 6)
+    BASE1BG=$(tput setab 4)
+    BASE2BG=$(tput setab 7)
+    BASE3BG=$(tput setab 7)
+    YELLOWBG=$(tput setab 3)
+    ORANGEBG=$(tput setab 3)
+    REDBG=$(tput setab 1)
+    MAGENTABG=$(tput setab 5)
+    VIOLETBG=$(tput setab 5)
+    BLUEBG=$(tput setab 4)
+    CYANBG=$(tput setab 6)
+    GREENBG=$(tput setab 2)
+fi
+RESET=$(tput sgr0)
+UNDERLINE=$(tput smul)
+ENDUNDERLINE=$(tput rmul)
+BOLD=$(tput bold)
+ENDBOLD=$RESET #no end bold
+STANDOUT=$(tput smso)
+ENDSTANDOUT=$(tput rmso)
+# define inversion colors
+if [[ ($THEME == "light") ]]
+then
+    EMPHASIS=$BASE01
+    PRIMARY=$BASE00
+    SECONDARY=$BASE1
+    BACKHL=$BASE2
+    BACK=$BASE3
+    EMPHASISBG=$BASE01BG
+    PRIMARYBG=$BASE00BG
+    SECONDARYBG=$BASE1BG
+    BACKHLBG=$BASE2BG
+    BACKBG=$BASE3BG
+else
+    EMPHASIS=$BASE1
+    PRIMARY=$BASE0
+    SECONDARY=$BASE01
+    BACKHL=$BASE02
+    BACK=$BASE03
+    EMPHASISBG=$BASE1BG
+    PRIMARYBG=$BASE0BG
+    SECONDARYBG=$BASE01BG
+    BACKHLBG=$BASE02BG
+    BACKBG=$BASE03BG
+fi
+}
+
+# WE ARE IN THE FUCKING 21ST CENTURY!
+# use 256 colors instead of 8 when using xfce4-terminal or gnome-terminal
+CMDLINEAPP=$(basename "$(</proc/$PPID/cmdline)")
+if [[ ($CMDLINEAPP == "xfce4-terminal") || ${CMDLINEAPP:0:14} == "gnome-terminal" ]]
+then
+    export TERM="xterm-256color"
+    # correct solarized palete from 256 colors
+    # while leaving the 16 standard colors untouched
+    printf '\x1B]4;234;rgb:00/2b/36;235;rgb:07/36/42;240;rgb:58/6e/75;241;rgb:65/7b/83;244;rgb:83/94/96;245;rgb:93/a1/a1;254;rgb:ee/e8/d5;230;rgb:fd/f6/e3;136;rgb:b5/89/00;166;rgb:cb/4b/16;160;rgb:dc/32/2f;125;rgb:d3/36/82;61;rgb:6c/71/c4;33;rgb:26/8b/d2;37;rgb:2a/a1/98;64;rgb:85/99/00\a'
+fi
+
+define_colornames
+
+# enable color support of ls
+alias ls='ls --color=auto'
+
+# enable color for grep and grep
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+alias watch='watch --color'
+#orange background matched text, magenta file names, yellow bold line numbers and byte offsets, cyan separators, and default terminal colors otherwise
+export GREP_COLORS="ms=07;33:mc=07;33:sl=:cx=:fn=35:ln=01;33:bn=01;33:se=36"
+
+# Less Colors
+export LESS_TERMCAP_mb=$BOLD$RED                    # begin blinking
+export LESS_TERMCAP_md=$BOLD$BLUE                   # begin bold
+export LESS_TERMCAP_me=$RESET                       # end mode
+export LESS_TERMCAP_se=$RESET                       # end standout-mode
+export LESS_TERMCAP_so=$STANDOUT$YELLOW             # begin standout-mode - info box
+export LESS_TERMCAP_ue=$RESET                       # end underline
+export LESS_TERMCAP_us=$UNDERLINE$GREEN             # begin underline
+
+# set the LS_COLORS, the defaults are ok if not running in >= 16 colors
+if [[ -x /usr/bin/dircolors && $(tput colors) -ge 16 ]]
+then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+fi
+
+# define symbols
+if [ $POWERLINED -eq 1 ]; then
+    LEFT_SEP=''
+    LEFT_SEP_ALT=''
+    RIGHT_SEP=''
+    RIGHT_SEP_ALT=''
+fi
+
+# other symbols
+CHECKMARK='✔'
+CROSS='✘'
+
